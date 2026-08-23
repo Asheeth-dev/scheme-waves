@@ -797,4 +797,140 @@ export const cancerNGOs: CancerNGO[] = [
   }
 ];
 
-export const helpDesks: HelpDesk[] = [];
+export const helpDesks: HelpDesk[] = [
+  {
+    "id": 1,
+    "name": "AIIMS Social Work Office",
+    "address": "AIIMS Campus, Ansari Nagar, New Delhi - 110029",
+    "phone": "011-26588500",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 2,
+    "name": "Kidwai Memorial Institute Social Work Dept",
+    "address": "Kidwai Campus, Hosur Road, Bengaluru - 560029",
+    "phone": "080-22440141",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 3,
+    "name": "Tata Memorial Hospital Help Desk",
+    "address": "Dr. E Borges Road, Parel, Mumbai - 400012",
+    "phone": "022-24177000",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 4,
+    "name": "Rajiv Gandhi Cancer Institute Help Desk",
+    "address": "Sector 5, Rohini, New Delhi - 110085",
+    "phone": "011-47022222",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 5,
+    "name": "Adyar Cancer Institute Help Desk",
+    "address": "Gandhi Mandapam Road, Chennai - 600036",
+    "phone": "044-24911541",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 6,
+    "name": "Apollo Cancer Foundation Help Desk",
+    "address": "Greams Road, Chennai - 600006",
+    "phone": "044-28293333",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "organization_type": "Hospital"
+  },
+  {
+    "id": 7,
+    "name": "Cancer Patients Aid Association (CPAA) Mumbai",
+    "address": "Pune Road, Sion, Mumbai - 400022",
+    "phone": "022-24132500",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 8,
+    "name": "Indian Cancer Society Delhi",
+    "address": "Qutub Institutional Area, New Delhi - 110016",
+    "phone": "011-26964300",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 9,
+    "name": "CanSupport Delhi NCR",
+    "address": "B-1/36, Hauz Khas, New Delhi - 110016",
+    "phone": "011-26852000",
+    "city": "New Delhi",
+    "state": "Delhi",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 10,
+    "name": "Karunashraya Bengaluru",
+    "address": "CADABAM's Doddakallasandra, Kanakapura Road, Bengaluru - 560062",
+    "phone": "080-26431122",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 11,
+    "name": "CanKids Help Desk",
+    "address": "Multiple cities — check website for nearest centre",
+    "phone": "1800-200-4112",
+    "city": "Multiple",
+    "state": "National",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 12,
+    "name": "V Care Foundation Helpline",
+    "address": "Tata Memorial Hospital Campus, Parel, Mumbai - 400012",
+    "phone": "1800-200-4112",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "organization_type": "NGO"
+  },
+  {
+    "id": 13,
+    "name": "PM-JAY Help Desk Karnataka",
+    "address": "Karnataka State Health Authority, Bengaluru",
+    "phone": "1800-11-8833",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "organization_type": "Government"
+  },
+  {
+    "id": 14,
+    "name": "PM-JAY National Helpline",
+    "address": "National Health Authority, New Delhi",
+    "phone": "1800-11-8833",
+    "city": "New Delhi",
+    "state": "National",
+    "organization_type": "Government"
+  },
+  {
+    "id": 15,
+    "name": "ESIC Regional Office Bengaluru",
+    "address": "Pampa Mahakavi Road, Bengaluru - 560009",
+    "phone": "080-23333000",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "organization_type": "Government"
+  }
+];
