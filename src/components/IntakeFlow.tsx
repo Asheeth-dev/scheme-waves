@@ -66,6 +66,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
         stop();
       };
     }
+    return undefined;
   }, [currentIndex, voiceMode, ttsSupported, question, speak, stop, getQuestionText]);
 
   // Process voice transcript to match options
