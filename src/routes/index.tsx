@@ -1,24 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
+import SahaayApp from "@/components/SahaayApp";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Sahaay — Cancer Scheme & Financial Aid Finder (India)" },
+      {
+        name: "description",
+        content:
+          "Answer a few voice questions in English, Hindi or Kannada and get a printable report of the government schemes, NGO grants and help desks you qualify for.",
+      },
+      { property: "og:title", content: "Sahaay — Cancer Financial Aid Navigator" },
+      {
+        property: "og:description",
+        content:
+          "Voice-first eligibility check in English, Hindi and Kannada for Indian cancer schemes, NGO grants and hospital help desks.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: SahaayApp,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
