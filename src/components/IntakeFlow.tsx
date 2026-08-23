@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Mic, MicOff, Volume2, VolumeX, ArrowLeft, ArrowRight, Check, RotateCcw } from 'lucide-react';
-import { intakeQuestions, type IntakeQuestion } from '@/lib/intakeQuestions';
+import {
+  intakeQuestions,
+  type IntakeQuestion,
+  getQuestionText as localizeQuestion,
+  getHelpText,
+  getOptionLabel,
+} from '@/lib/intakeQuestions';
+import { t } from '@/lib/uiStrings';
 import { useVoiceRecognition, useTextToSpeech } from '@/hooks/useVoice';
 import type { IntakeAnswers } from '@/types';
 
@@ -45,12 +52,10 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
   const totalQuestions = intakeQuestions.length;
   const progress = ((currentIndex) / totalQuestions) * 100;
 
+  const s = t(language);
+
   const getQuestionText = useCallback(
-    (q: IntakeQuestion) => {
-      if (language === 'hi') return q.questionHindi || q.question;
-      if (language === 'kn') return q.questionKannada || q.question;
-      return q.question;
-    },
+    (q: IntakeQuestion) => localizeQuestion(q, language),
     [language]
   );
 
@@ -115,6 +120,11 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
 
     if (question.type === 'choice' && question.options) {
       for (const opt of question.options) {
+        const localized = getOptionLabel(opt, language).toLowerCase();
+        if (localized && text.includes(localized)) {
+          selectAnswer(question.key, opt.value);
+          return;
+        }
         const optLabel = opt.label.toLowerCase();
         const optValue = String(opt.value).toLowerCase();
         const labelWords = optLabel.split(/[\s/()]+/).filter((w) => w.length > 3);
@@ -195,11 +205,11 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
             className="flex items-center gap-1.5 text-slate-600 hover:text-slate-900 text-sm font-medium transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Home
+            {s.home}
           </button>
           <div className="flex items-center gap-3">
             <span className="text-sm text-slate-500">
-              Question {currentIndex + 1} of {totalQuestions}
+              {s.questionOf(currentIndex + 1, totalQuestions)}
             </span>
             <button
               onClick={() => {
@@ -216,7 +226,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
               }`}
             >
               {voiceMode ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-              Voice {voiceMode ? 'On' : 'Off'}
+              {s.voice} {voiceMode ? s.voiceOn : s.voiceOff}
             </button>
           </div>
         </div>
@@ -241,8 +251,8 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                   {getQuestionText(question)}
                 </h2>
               </div>
-              {question.helpText && (
-                <p className="text-slate-500 text-base ml-4">{question.helpText}</p>
+              {getHelpText(question, language) && (
+                <p className="text-slate-500 text-base ml-4">{getHelpText(question, language)}</p>
               )}
             </div>
 
@@ -260,23 +270,23 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                   {isListening ? (
                     <>
                       <MicOff className="w-6 h-6 animate-pulse" />
-                      Listening... Tap to stop
+                      {s.listening}
                     </>
                   ) : (
                     <>
                       <Mic className="w-6 h-6" />
-                      Tap and speak your answer
+                      {s.tapAndSpeak}
                     </>
                   )}
                 </button>
                 {transcript && (
                   <p className="text-center text-slate-600 mt-3 text-sm">
-                    Heard: "{transcript}"
+                    {s.heard}: "{transcript}"
                   </p>
                 )}
                 {!sttSupported && (
                   <p className="text-center text-amber-600 mt-2 text-sm">
-                    Voice input isn't supported on this browser. Please use the buttons below.
+                    {s.sttUnsupported}
                   </p>
                 )}
               </div>
@@ -297,7 +307,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                           : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
                       }`}
                     >
-                      {opt.label}
+                      {getOptionLabel(opt, language)}
                       {isSelected && <Check className="w-5 h-5 flex-shrink-0 ml-2" />}
                     </button>
                   );
@@ -316,7 +326,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                   }`}
                 >
                   <Check className="w-6 h-6" />
-                  Yes
+                  {s.yes}
                 </button>
                 <button
                   onClick={() => selectAnswer(question.key, false)}
@@ -327,7 +337,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                   }`}
                 >
                   <MicOff className="w-6 h-6" />
-                  No
+                  {s.no}
                 </button>
               </div>
             )}
@@ -339,14 +349,14 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                   value={numberInput}
                   onChange={(e) => setNumberInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleNumberSubmit()}
-                  placeholder="Enter age"
+                  placeholder={s.enterAge}
                   className="flex-1 px-5 py-4 rounded-xl text-lg border border-slate-300 focus:border-sky-500 focus:ring-2 focus:ring-sky-200 outline-none"
                 />
                 <button
                   onClick={handleNumberSubmit}
                   className="px-6 py-4 bg-sky-600 text-white rounded-xl text-lg font-semibold hover:bg-sky-700 transition-colors"
                 >
-                  Submit
+                  {s.submit}
                 </button>
               </div>
             )}
@@ -358,7 +368,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
                 className="mt-6 flex items-center gap-2 text-slate-500 hover:text-slate-700 text-sm font-medium transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
-                Repeat question slowly
+                {s.repeatSlowly}
               </button>
             )}
           </div>
@@ -371,14 +381,14 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
               className="flex items-center gap-1.5 px-4 py-2.5 text-slate-600 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed font-medium transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              {s.back}
             </button>
             <button
               onClick={isLast ? finishIntake : handleNext}
               disabled={!isAnswered()}
               className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-[0.98]"
             >
-              {isLast ? 'See My Results' : 'Next'}
+              {isLast ? s.seeResults : s.next}
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
