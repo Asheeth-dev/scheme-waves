@@ -41,7 +41,7 @@ export default function IntakeFlow({ onComplete, onBack, language }: IntakeFlowP
     useVoiceRecognition(language);
   const { speak, stop, isSpeaking, isSupported: ttsSupported } = useTextToSpeech(language);
 
-  const question: IntakeQuestion = intakeQuestions[currentIndex];
+  const question: IntakeQuestion = intakeQuestions[currentIndex]!;
   const totalQuestions = intakeQuestions.length;
   const progress = ((currentIndex) / totalQuestions) * 100;
 

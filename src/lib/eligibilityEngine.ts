@@ -138,7 +138,7 @@ function matchScheme(
 
   // HMDG
   if (name.includes('discretionary grant')) {
-    const income = answers.incomeBracket ? INCOME_THRESHOLDS[answers.incomeBracket] : Infinity;
+    const income = answers.incomeBracket ? (INCOME_THRESHOLDS[answers.incomeBracket] ?? Infinity) : Infinity;
     if (income > 125000) return null;
     reasons.push('Your annual family income is within the ₹1,25,000 limit for the Health Minister\'s Discretionary Grant.');
     reasons.push('You can receive up to ₹50,000 covering up to 70% of your treatment bill.');
@@ -261,7 +261,7 @@ function matchScheme(
   // Assam
   if (scheme.region === 'Assam') {
     if (name.includes('atal amrit')) {
-      const income = answers.incomeBracket ? INCOME_THRESHOLDS[answers.incomeBracket] : Infinity;
+      const income = answers.incomeBracket ? (INCOME_THRESHOLDS[answers.incomeBracket] ?? Infinity) : Infinity;
       if (income > 500000) return null;
       reasons.push('Your family income is below ₹5 lakh, qualifying for Atal Amrit Abhiyan coverage of ₹2 lakh/person/year.');
       return { scheme, reasons, documentsNeeded: buildDocumentsNeeded(scheme, answers) };
@@ -344,7 +344,7 @@ function matchScheme(
       return { scheme, reasons, documentsNeeded: buildDocumentsNeeded(scheme, answers) };
     }
     if (name.includes('chirayu')) {
-      const income = answers.incomeBracket ? INCOME_THRESHOLDS[answers.incomeBracket] : Infinity;
+      const income = answers.incomeBracket ? (INCOME_THRESHOLDS[answers.incomeBracket] ?? Infinity) : Infinity;
       if (income > 180000) return null;
       reasons.push('Your family income is below ₹1.8 lakh, qualifying for Chirayu Haryana Yojana coverage of ₹5 lakh/family/year.');
       return { scheme, reasons, documentsNeeded: buildDocumentsNeeded(scheme, answers) };
